@@ -4,10 +4,12 @@ import './Oceandea.css';
 const Oceandea = () => {
   const canvasRef = useRef(null);
   const [treeData, setTreeData] = useState(() => {
+    if (typeof window === 'undefined') return getDefaultTree();
     const saved = localStorage.getItem('oceandea_tree');
     return saved ? JSON.parse(saved) : getDefaultTree();
   });
   const [expandedNodes, setExpandedNodes] = useState(() => {
+    if (typeof window === 'undefined') return new Set();
     const saved = localStorage.getItem('oceandea_expanded');
     return saved ? JSON.parse(saved) : new Set();
   });
@@ -58,11 +60,15 @@ const Oceandea = () => {
 
   // Auto-save tree and expanded nodes
   useEffect(() => {
-    localStorage.setItem('oceandea_tree', JSON.stringify(treeData));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('oceandea_tree', JSON.stringify(treeData));
+    }
   }, [treeData]);
 
   useEffect(() => {
-    localStorage.setItem('oceandea_expanded', JSON.stringify(Array.from(expandedNodes)));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('oceandea_expanded', JSON.stringify(Array.from(expandedNodes)));
+    }
   }, [expandedNodes]);
 
   // Fetch description for a node
