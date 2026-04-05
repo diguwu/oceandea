@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Oceandea.css';
 
 const Oceandea = () => {
-  const canvasRef = useRef(null);
   const [treeData, setTreeData] = useState(() => {
     if (typeof window === 'undefined') return getDefaultTree();
     const saved = localStorage.getItem('oceandea_tree');
